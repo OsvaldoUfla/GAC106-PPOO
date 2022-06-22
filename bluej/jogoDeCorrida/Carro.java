@@ -8,8 +8,8 @@
 public class Carro
 {
     // ATENÇAO : Esta  classe fere principios de OO que ainda serao vistos!!
-    String nome;
-    int velocidade;
+    private String nome;
+    private int velocidade;
 
     /**
      * Cria um carro com o nome passado.
@@ -23,7 +23,7 @@ public class Carro
     /**
      * Retorna o nome do carro.
      */
-    String getNome()
+    public String getNome()
     {
                 return nome;
     }
@@ -31,7 +31,7 @@ public class Carro
     /**
      * Retorna a velocidade do carro.
      */
-    int getVelocidade()
+    public int getVelocidade()
     {
                 return velocidade;
     }
@@ -39,7 +39,7 @@ public class Carro
     /**
      * Acelera o carro.
      */
-    void acelerar()
+    public void acelerar()
     {
         velocidade = velocidade + 10;
     }
@@ -47,7 +47,7 @@ public class Carro
     /**
      * Desacelera o carro.
      */
-    void reduzir()
+    public void reduzir()
     {
         velocidade = velocidade - 10;
     }
