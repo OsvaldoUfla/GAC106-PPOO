@@ -3,11 +3,10 @@
  * Classe que representa um carro no jogo de corrida
  * 
  * @author (Osvaldo Rodrigues De Faria Junior) 
- * @version (20/06/2022)
+ * @version 2.0
  */
 public class Carro
 {
-    // ATENÇAO : Esta  classe fere principios de OO que ainda serao vistos!!
     private String nome;
     private int velocidade;
 
@@ -39,17 +38,25 @@ public class Carro
     /**
      * Acelera o carro.
      */
-    public void acelerar()
+    public void acelerar(int valor)
     {
-        velocidade = velocidade + 10;
+        velocidade = velocidade + valor;
     }
     
     /**
      * Desacelera o carro.
      */
-    public void reduzir()
+    public boolean reduzir(int valor)
     {
-        velocidade = velocidade - 10;
+        if(velocidade >= 0)
+        {
+            velocidade = velocidade - valor;
+            return true;
+        }
+        else
+        {
+            return false ;
+        }
     }
     
     /**
