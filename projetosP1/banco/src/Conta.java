@@ -3,22 +3,19 @@
  * 
  * autor Osvaldo, data 22-06-2022 
  */
-
-
-
 public class Conta {
     //Atributos da conta
     private double saldo;
     private double limite;
     private double limiteUtilizado;
 
-    //Construtor
+    //Construtor sem parametros
     Conta()
     {
         this(0.0 , 0.0);
     }
 
-    //Construtor
+    //Construtor passando parametros
     Conta(double saldo, double limite)
     {
         this.saldo = saldo;
@@ -27,13 +24,11 @@ public class Conta {
     }
 
     //Consulta o saldo
-    public String getSaldo()
+    public double getSaldo()
     {
-       String mensagem = saldo;
-       return mensagem;
+       double saldo1 = saldo; 
+       return saldo1;
     }
-
-    //Método private para controle do limite
 
     //Saque
     public String saque(double valor)
@@ -67,7 +62,7 @@ public class Conta {
             saldo = saldo + valor;
             tDeposito = "Deposito realizado com sucesso.";
         }
-        else if()
+        else
         {
             double n =
         }
