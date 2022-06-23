@@ -1,4 +1,3 @@
-
 /**
  * Classe que representa um carro no jogo de corrida
  * 
@@ -48,19 +47,15 @@ public class Carro
      */
     public boolean reduzir(int valor)
     {
-        if(velocidade >= 0)
+        if((velocidade - valor) > 0)
         {
             velocidade = velocidade - valor;
             return true;
         }
         else
         {
+            velocidade = 0;
             return false ;
         }
     }
-    
-    /**
-     * 
-     */
-    
 }
