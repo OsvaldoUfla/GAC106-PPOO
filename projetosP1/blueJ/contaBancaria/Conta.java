@@ -1,7 +1,10 @@
+
 /**
- * Classe conta de um banco
- * 
- * autor Osvaldo, data 22-06-2022 
+ * Classe conta do projeto conta bancaria  
+ * exercicio pratico da 1º lista de exercicios 
+ * implementado no vscode com esta copia no bluej para depuraçao
+ * @author Osvaldo 
+ * @version (25-06-2022
  */
 public class Conta {
     //Atributos da conta
@@ -44,7 +47,7 @@ public class Conta {
         
         
     }
-    //Deposita o valor na conta.
+
     public void deposito(double valor)
     {
        saldo = saldo + valor;
