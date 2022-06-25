@@ -22,7 +22,7 @@ public class Banco {
                 int n = entrada.nextInt();
                 if(n == 1)
                 {
-                    System.out.println(" digite o saldo depois limite : ");
+                    System.out.println(" digite o saldo depois limite : ");//melhorar este texto
                     double saldo = entrada.nextDouble();
                     double limite = entrada.nextDouble();
                     conta = new Conta(saldo,limite);
@@ -36,31 +36,30 @@ public class Banco {
                     System.out.println(" Opção Inválida! ");
                 }
             }
-            //mudei até aqui !
             else if(opcao == 2)
             {
-                System.out.println("Carro de nome : " + carro.getNome() + " e velocidade " + carro.getVelocidade());
+                System.out.println("O saldo é de : " + conta.getSaldo());
             }
             
             else if(opcao == 3)
             {
-                System.out.println("Quanto voce quer acelerar : ");
-                int quanto = Integer.parseInt(entrada.nextLine());
-                carro.acelerar(quanto);
-                System.out.println("Nova velocidade e " + carro.getVelocidade());
+                System.out.println("Insira o valor a ser depositado : ");
+                double quanto = entrada.nextDouble();
+                conta.deposito(quanto);
+                System.out.println("Depósito realizado! ");
             }
             
             else if(opcao == 4)
             {
-                System.out.println("Quanto voce quer reduzir : ");
-                int quanto = Integer.parseInt(entrada.nextLine());
-                if(carro.reduzir(quanto))
+                System.out.println("Digite o valor a ser sacado : ");
+                double quanto = entrada.nextDouble();
+                if(conta.saque(quanto))
                 {
-                    System.out.println("Nova velocidade e " + carro.getVelocidade());
+                    System.out.println("Saque realizado! ");
                 }
                 else
                 {
-                    System.out.println("Reduzida maior ou igual a velocidade do carro, carro parado! ");
+                    System.out.println("Saldo ou limite insuficiente! ");
                 }
             }
             
@@ -87,10 +86,10 @@ public class Banco {
     private static int exibirMenu(Scanner entrada)
     {
         System.out.println("");
-        System.out.println("1) Criar o carro ");
-        System.out.println("2) Exibir os dados do carrro ");
-        System.out.println("3) Acelerar o carro ");
-        System.out.println("4) Reduzir a velocidade do carro ");
+        System.out.println("1) Criar conta ");
+        System.out.println("2) consultar saldo ");
+        System.out.println("3) Depositar ");
+        System.out.println("4) Reakizar saque ");
         System.out.println("5) Sair");
         System.out.println("Digite sua opçao desejada : ");
         int opcaoDoUsuario = Integer.parseInt(entrada.nextLine());
@@ -106,4 +105,4 @@ public class Banco {
         System.out.println("");
         entrada.nextLine();
     }
-}
+
