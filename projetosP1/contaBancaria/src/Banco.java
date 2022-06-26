@@ -6,13 +6,12 @@ import java.util.Scanner;
  * Versão 25-06-2022
  */
 
-import javax.lang.model.util.ElementScanner14;
-
 public class Banco {
-    private Conta conta;
+    private Conta conta = null;
     Scanner entrada = new Scanner(System.in);
-        
-        int opcao = 0;
+    int opcao = 0;     
+    public void loop()
+    {
         while(opcao != 5)
         {
             opcao = exibirMenu(entrada);
@@ -89,7 +88,7 @@ public class Banco {
         System.out.println("1) Criar conta ");
         System.out.println("2) consultar saldo ");
         System.out.println("3) Depositar ");
-        System.out.println("4) Reakizar saque ");
+        System.out.println("4) Realizar saque ");
         System.out.println("5) Sair");
         System.out.println("Digite sua opçao desejada : ");
         int opcaoDoUsuario = Integer.parseInt(entrada.nextLine());
@@ -105,4 +104,5 @@ public class Banco {
         System.out.println("");
         entrada.nextLine();
     }
+}
 

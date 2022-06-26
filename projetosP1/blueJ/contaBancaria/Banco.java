@@ -1,84 +1,83 @@
 import java.util.Scanner;
-/**
+/*
  * Classe Banco, classe para interagir com a classe Conta.
  * 
  * Autor Osvaldo 
  * Versão 25-06-2022
  */
 
-import javax.lang.model.util.ElementScanner14;
-
 public class Banco {
-    private Conta conta;
+    private Conta conta = null;
     Scanner entrada = new Scanner(System.in);
-        
-    int opcao = 0;
-    while(opcao != 5)
+    int opcao = 0;     
+    public void loop()
     {
-        opcao = exibirMenu(entrada);
-        if(opcao == 1)
+        while(opcao != 5)
         {
-            System.out.println("Deseja criar uma conta com saldo e limite com um valor  inicial digite 1, ou digite 2 para criar uma conta com saldo e limite igual a zero : ");
-            int n = entrada.nextInt();
-            if(n == 1)
+            opcao = exibirMenu(entrada);
+            if(opcao == 1)
             {
-                System.out.println(" digite o saldo depois limite : ");//melhorar este texto
-                double saldo = entrada.nextDouble();
-                double limite = entrada.nextDouble();
-                conta = new Conta(saldo,limite);
+                System.out.println("Deseja criar uma conta com saldo e limite com um valor  inicial digite 1, ou digite 2 para criar uma conta com saldo e limite igual a zero : ");
+                int n = entrada.nextInt();
+                if(n == 1)
+                {
+                    System.out.println(" digite o saldo depois limite : ");//melhorar este texto
+                    double saldo = entrada.nextDouble();
+                    double limite = entrada.nextDouble();
+                    conta = new Conta(saldo,limite);
+                }
+                else if(n == 2)
+                {
+                    conta = new Conta();
+                }
+                else 
+                {
+                    System.out.println(" Opção Inválida! ");
+                }
             }
-            else if(n == 2)
+            else if(opcao == 2)
             {
-                conta = new Conta();
+                System.out.println("O saldo é de : " + conta.getSaldo());
             }
-            else 
+            
+            else if(opcao == 3)
             {
-                System.out.println(" Opção Inválida! ");
+                System.out.println("Insira o valor a ser depositado : ");
+                double quanto = entrada.nextDouble();
+                conta.deposito(quanto);
+                System.out.println("Depósito realizado! ");
             }
-        }
-        else if(opcao == 2)
-        {
-            System.out.println("O saldo é de : " + conta.getSaldo());
-        }
-        
-        else if(opcao == 3)
-        {
-            System.out.println("Insira o valor a ser depositado : ");
-            double quanto = entrada.nextDouble();
-            conta.deposito(quanto);
-            System.out.println("Depósito realizado! ");
-        }
-        
-        else if(opcao == 4)
-        {
-            System.out.println("Digite o valor a ser sacado : ");
-            double quanto = entrada.nextDouble();
-            if(conta.saque(quanto))
+            
+            else if(opcao == 4)
             {
-                System.out.println("Saque realizado! ");
+                System.out.println("Digite o valor a ser sacado : ");
+                double quanto = entrada.nextDouble();
+                if(conta.saque(quanto))
+                {
+                    System.out.println("Saque realizado! ");
+                }
+                else
+                {
+                    System.out.println("Saldo ou limite insuficiente! ");
+                }
             }
+            
+            else if(opcao == 5)
+            {
+                System.out.println("Ate mais! ");
+            }
+            
             else
             {
-                System.out.println("Saldo ou limite insuficiente! ");
+                System.out.println("Opçao invalida! ");
+            }
+            
+            if(opcao !=5 )
+            {
+                aguardarEnter(entrada);
             }
         }
-        
-        else if(opcao == 5)
-        {
-            System.out.println("Ate mais! ");
-        }
-        
-        else
-        {
-            System.out.println("Opçao invalida! ");
-        }
-        
-        if(opcao !=5 )
-        {
-            aguardarEnter(entrada);
-        }
     }
-
        
     /**
      * Exibe o menu 
@@ -106,3 +105,4 @@ public class Banco {
         entrada.nextLine();
     }
 }
+
