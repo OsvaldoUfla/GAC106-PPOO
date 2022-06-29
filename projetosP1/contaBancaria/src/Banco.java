@@ -7,9 +7,9 @@ import java.util.Scanner;
  */
 
 public class Banco {
-    private Conta conta = null;
+    private Conta conta;
     Scanner entrada = new Scanner(System.in);
-    int opcao = 0;     
+    private int opcao = 0;     
     public void loop()
     {
         while(opcao != 5)
@@ -17,27 +17,19 @@ public class Banco {
             opcao = exibirMenu(entrada);
             if(opcao == 1)
             {
-                System.out.println("Deseja criar uma conta com saldo e limite com um valor  inicial digite 1, ou digite 2 para criar uma conta com saldo e limite igual a zero : ");
-                int n = entrada.nextInt();
-                if(n == 1)
-                {
-                    System.out.println(" digite o saldo depois limite : ");//melhorar este texto
-                    double saldo = entrada.nextDouble();
-                    double limite = entrada.nextDouble();
-                    conta = new Conta(saldo,limite);
-                }
-                else if(n == 2)
-                {
-                    conta = new Conta();
-                }
-                else 
-                {
-                    System.out.println(" Opção Inválida! ");
-                }
+                System.out.println(" Nome do Cliente : ");
+                String nomeMenu = entrada.nextLine();
+                System.out.println(" Cpf do cliente : ");
+                String cpfMenu = entrada.nextLine();
+                System.out.println(" Saldo : ");
+                double saldo = entrada.nextDouble();
+                System.out.println(" Limite : ");
+                double limite = entrada.nextDouble();
+                conta = new Conta(saldo, limite, nomeMenu, cpfMenu);
             }
             else if(opcao == 2)
             {
-                System.out.println("O saldo é de : " + conta.getSaldo());
+                System.out.println(conta.getSaldo());
             }
             
             else if(opcao == 3)
@@ -78,7 +70,12 @@ public class Banco {
             }
         }
     }
-       
+    
+    Banco()
+    {
+        conta = null;
+    }
+    
     /**
      * Exibe o menu 
      */

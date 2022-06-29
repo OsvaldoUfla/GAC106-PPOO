@@ -7,24 +7,21 @@ public class Conta {
     //Atributos da conta
     private double saldo;
     private double limite;
-
-    //Construtor sem parametros
-    Conta()
-    {
-        this(0.0 , 0.0);
-    }
-
+    private Cliente cliente1;
+    
     //Construtor passando parametros
-    Conta(double saldo, double limite)
+    Conta(double saldo, double limite,String nome, String cpf)
     {
         this.saldo = saldo;
         this.limite = limite;
+        cliente1 = new Cliente(nome, cpf);
     }
 
     //Consulta o saldo
-    public double getSaldo()
+    public String getSaldo()
     { 
-       return saldo;
+        String saldoNaConta = cliente1.cliente() + "Saldo : " + saldo + " \n";
+        return saldoNaConta;
     }
 
     //Saque
