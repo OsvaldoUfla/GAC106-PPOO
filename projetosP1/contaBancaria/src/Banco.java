@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 public class Banco {
     private Conta conta;
+
     Scanner entrada = new Scanner(System.in);
     private int opcao = 0;     
     public void loop()
@@ -17,46 +18,25 @@ public class Banco {
             opcao = exibirMenu(entrada);
             if(opcao == 1)
             {
-                System.out.println(" Nome do Cliente : ");
-                String nomeMenu = entrada.nextLine();
-                System.out.println(" Cpf do cliente : ");
-                String cpfMenu = entrada.nextLine();
-                System.out.println(" Saldo : ");
-                double saldo = entrada.nextDouble();
-                System.out.println(" Limite : ");
-                double limite = entrada.nextDouble();
-                conta = new Conta(saldo, limite, nomeMenu, cpfMenu);
+                criaConta();
             }
             else if(opcao == 2)
             {
-                System.out.println(conta.getSaldo());
-            }
+                exibeCliente();            }
             
             else if(opcao == 3)
             {
-                System.out.println("Insira o valor a ser depositado : ");
-                double quanto = entrada.nextDouble();
-                conta.deposito(quanto);
-                System.out.println("Depósito realizado! ");
+                depositar();
             }
             
             else if(opcao == 4)
             {
-                System.out.println("Digite o valor a ser sacado : ");
-                double quanto = entrada.nextDouble();
-                if(conta.saque(quanto))
-                {
-                    System.out.println("Saque realizado! ");
-                }
-                else
-                {
-                    System.out.println("Saldo ou limite insuficiente! ");
-                }
+                sacar();
             }
             
             else if(opcao == 5)
             {
-                System.out.println("Ate mais! ");
+                despedida();
             }
             
             else
@@ -75,7 +55,68 @@ public class Banco {
     {
         conta = null;
     }
+
+    /*
+     * Método cria conta
+     */
+    private void criaConta()
+    {
+        System.out.println(" Nome do Cliente : ");
+        String nomeMenu = entrada.nextLine();
+        System.out.println(" Cpf do cliente : ");
+        String cpfMenu = entrada.nextLine();
+        System.out.println(" Saldo : ");
+        double saldo = entrada.nextDouble();
+        System.out.println(" Limite : ");
+        double limite = entrada.nextDouble();
+        Cliente cliente1 = new Cliente(nomeMenu, cpfMenu);
+        conta = new Conta(saldo, limite, cliente1);
+    }
+
+    /*
+     * Exibe nome cpf e saldo do cliente
+     */
+     private void exibeCliente()
+     {
+        System.out.println(conta.getClienteSaldo());
+     }
+
+     /*
+      * Realiza um depósito
+      */
+    private void depositar()
+    {
+        System.out.println("Insira o valor a ser depositado : ");
+        double quanto = entrada.nextDouble();
+        conta.deposito(quanto);
+        System.out.println("Depósito realizado! ");
+    }
     
+    /*
+     * Realiza um saque
+     */
+    private void sacar()
+    {
+        System.out.println("Digite o valor a ser sacado : ");
+        double quanto = entrada.nextDouble();
+        if(conta.saque(quanto))
+        {
+            System.out.println("Saque realizado! ");
+        }
+        else
+        {
+            System.out.println("Saldo ou limite insuficiente! ");
+        }
+    }
+
+     /*
+      * Exibe despedida
+      */
+    private static void despedida()
+    {
+        System.out.println("Ate mais! ");
+    }
+
     /**
      * Exibe o menu 
      */
@@ -87,7 +128,7 @@ public class Banco {
         System.out.println("3) Depositar ");
         System.out.println("4) Realizar saque ");
         System.out.println("5) Sair");
-        System.out.println("Digite sua opçao desejada : ");
+        System.out.println("Digite opçao desejada : ");
         int opcaoDoUsuario = Integer.parseInt(entrada.nextLine());
         return opcaoDoUsuario;
     }

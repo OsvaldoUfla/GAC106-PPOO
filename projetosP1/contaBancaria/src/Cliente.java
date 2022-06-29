@@ -8,9 +8,22 @@ public class Cliente
         this.nome = nome;
         this.cpf = cpf;
     }
-    public String cliente()
+
+    /*
+     * Método que retorna uma string com o nome do cliente 
+     */
+    public String getNome()
     {
-        String t ="\nCliente : " + nome + "\nCPF : " + cpf + " \n";
+        String t ="Cliente : " + nome + " \n";
+        return t;
+    }
+
+    /*
+     * Método que retorna uma string com o cpf do cliente 
+     */
+    public String getCpf()
+    {
+        String t ="CPF : " + cpf + " \n";
         return t;
     }
 }

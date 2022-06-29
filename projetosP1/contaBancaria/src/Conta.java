@@ -10,17 +10,17 @@ public class Conta {
     private Cliente cliente1;
     
     //Construtor passando parametros
-    Conta(double saldo, double limite,String nome, String cpf)
+    Conta(double saldo, double limite, Cliente cliente)
     {
         this.saldo = saldo;
         this.limite = limite;
-        cliente1 = new Cliente(nome, cpf);
+        this.cliente1 = cliente;
     }
 
     //Consulta o saldo
-    public String getSaldo()
+    public String getClienteSaldo()
     { 
-        String saldoNaConta = cliente1.cliente() + "Saldo : " + saldo + " \n";
+        String saldoNaConta = cliente1.getNome() + cliente1.getCpf() + "Saldo : " + saldo + " \n";
         return saldoNaConta;
     }
 
