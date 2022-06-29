@@ -4,17 +4,27 @@
  * autor Osvaldo, data 22-06-2022 
  */
 public class Conta {
+    //Atirbutos da classe conta
+    private static int nroDecontas = 1000;
     //Atributos da conta
+    private int nroDaconta;
     private double saldo;
     private double limite;
     private Cliente cliente1;
     
-    //Construtor passando parametros
+    //Construtor passando parametros limite cliente
+    Conta(double limite, Cliente cliente)
+    {
+        this(0.0,limite, cliente);
+    }
+    //Construtor passando parametros saldo limite cliente
     Conta(double saldo, double limite, Cliente cliente)
     {
         this.saldo = saldo;
         this.limite = limite;
         this.cliente1 = cliente;
+        nroDecontas++;
+        nroDaconta = nroDecontas;
     }
 
     //Consulta o saldo

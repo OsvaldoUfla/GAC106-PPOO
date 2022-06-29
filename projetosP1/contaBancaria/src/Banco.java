@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 public class Banco {
     private Conta conta;
+    private Conta conta1;
 
     Scanner entrada = new Scanner(System.in);
     private int opcao = 0;     
@@ -18,7 +19,17 @@ public class Banco {
             opcao = exibirMenu(entrada);
             if(opcao == 1)
             {
-                criaConta();
+                System.out.println("Deseja criar a conta saldo inicial? (s para SIM OU n para NÃO) ");
+                String simNao = entrada.nextLine();
+                if((simNao == "s") || (simNao == "S"))
+                {
+                    criaConta();
+                }
+                else
+                {
+                    criaContaZero();  
+                }
+          
             }
             else if(opcao == 2)
             {
@@ -57,20 +68,42 @@ public class Banco {
     }
 
     /*
-     * Método cria conta
+     * Método cria conta com saldo incial zero
      */
     private void criaConta()
+    {
+        
+        System.out.println(" Saldo : ");
+        double saldo = entrada.nextDouble();
+        System.out.println(" Limite : ");
+        double limite = entrada.nextDouble();
+        
+        conta = new Conta(saldo, limite, cadastraCliente());
+    }
+
+    private Cliente cadastraCliente()
     {
         System.out.println(" Nome do Cliente : ");
         String nomeMenu = entrada.nextLine();
         System.out.println(" Cpf do cliente : ");
         String cpfMenu = entrada.nextLine();
-        System.out.println(" Saldo : ");
-        double saldo = entrada.nextDouble();
+        Cliente cliente1 = new Cliente(nomeMenu, cpfMenu);
+        return cliente1;
+    }
+
+    /*
+     * Método cria conta com saldo informado
+     */
+    private void criaContaZero()
+    {
+        System.out.println(" Nome do Cliente : ");
+        String nomeMenu = entrada.nextLine();
+        System.out.println(" Cpf do cliente : ");
+        String cpfMenu = entrada.nextLine();
         System.out.println(" Limite : ");
         double limite = entrada.nextDouble();
         Cliente cliente1 = new Cliente(nomeMenu, cpfMenu);
-        conta = new Conta(saldo, limite, cliente1);
+        conta = new Conta(limite, cliente1);
     }
 
     /*
