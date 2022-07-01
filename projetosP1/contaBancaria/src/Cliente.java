@@ -10,6 +10,14 @@ public class Cliente
     }
 
     /*
+     * Novo cliente
+     */
+    public static Cliente novoCliente(String nome, String cpf)
+    {
+        return new Cliente(nome, cpf);
+    }
+
+    /*
      * Método que retorna uma string com o nome do cliente 
      */
     public String getNome()
