@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class Banco {
     private Conta conta;
-    private Conta conta1;
+    //private Conta conta1;
 
     Scanner entrada = new Scanner(System.in);
     private int opcao = 0;     
