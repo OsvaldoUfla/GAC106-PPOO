@@ -23,8 +23,8 @@ public class Conta {
         this.saldo = saldo;
         this.limite = limite;
         this.cliente1 = cliente;
-        nroDecontas++;
         nroDaconta = nroDecontas;
+        nroDecontas++;        
     }
 
     //Consulta o saldo
@@ -32,6 +32,12 @@ public class Conta {
     { 
         String saldoNaConta = cliente1.getNome() + cliente1.getCpf() + "Saldo : " + saldo + " \n";
         return saldoNaConta;
+    }
+
+    //retorna o numero da conta
+    public int getN_conta()
+    { 
+        return nroDaconta;
     }
 
     //Saque

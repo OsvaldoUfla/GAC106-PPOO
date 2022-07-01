@@ -14,22 +14,12 @@ public class Banco {
     private int opcao = 0;     
     public void loop()
     {
-        while(opcao != 5)
+        while(opcao != 6)
         {
             opcao = exibirMenu(entrada);
             if(opcao == 1)
             {
-                System.out.println("Deseja criar a conta saldo inicial? (s para SIM OU n para NÃO) ");
-                String simNao = entrada.nextLine();
-                if((simNao == "s") || (simNao == "S"))
-                {
-                    criaConta();
-                }
-                else
-                {
-                    criaContaZero();  
-                }
-          
+                criaConta();          
             }
             else if(opcao == 2)
             {
@@ -37,15 +27,20 @@ public class Banco {
             
             else if(opcao == 3)
             {
-                depositar();
+                depositar2();
             }
             
             else if(opcao == 4)
             {
-                sacar();
+                sacar2();
+            }
+
+            else if(opcao == 5)
+            {
+                transferencia2();
             }
             
-            else if(opcao == 5)
+            else if(opcao == 6)
             {
                 despedida();
             }
@@ -55,7 +50,7 @@ public class Banco {
                 System.out.println("Opçao invalida! ");
             }
             
-            if(opcao !=5 )
+            if(opcao !=6 )
             {
                 aguardarEnter(entrada);
             }
@@ -67,43 +62,69 @@ public class Banco {
         conta = null;
     }
 
-    /*
-     * Método cria conta com saldo incial zero
-     */
+    
     private void criaConta()
     {
+        System.out.println("Deseja criar a conta saldo inicial? (s para SIM OU n para NÃO) ");
+        String simNao = entrada.nextLine();
+        if(simNao.equals("s") || simNao.equals("S"))
+        {
+            /*
+             * Método cria conta com saldo informado
+            */
+            System.out.println(" Saldo : ");
+            double saldo = entrada.nextDouble();
+            System.out.println(" Limite : ");
+            double limite = entrada.nextDouble();
+            conta = new Conta(saldo, limite, cadastraCliente());
+            System.out.println("Conta numero " + conta.getN_conta() + " criada com socesso ");
+        }
+        else
+        {   
+            /*
+             * Método cria conta com saldo incial zero
+            */
+            System.out.println(" Limite : ");
+            double limite = entrada.nextDouble();
+            conta = new Conta(limite, cadastraCliente());
+            System.out.println("Conta numero " + conta.getN_conta() + " criada com socesso ");
+        }
         
-        System.out.println(" Saldo : ");
-        double saldo = entrada.nextDouble();
-        System.out.println(" Limite : ");
-        double limite = entrada.nextDouble();
-        
-        conta = new Conta(saldo, limite, cadastraCliente());
+        System.out.println("Deseja criar a conta saldo inicial? (s para SIM OU n para NÃO) ");
+        simNao = entrada.nextLine();
+        if(simNao.equals("s") || simNao.equals("S"))
+        {
+            /*
+             * Método cria conta com saldo informado
+            */
+            System.out.println(" Saldo : ");
+            double saldo = entrada.nextDouble();
+            System.out.println(" Limite : ");
+            double limite = entrada.nextDouble();
+            conta1 = new Conta(saldo, limite, cadastraCliente());
+            System.out.println("Conta numero " + conta1.getN_conta() + " criada com socesso ");
+        }
+        else
+        {   
+            /*
+             * Método cria conta com saldo incial zero
+            */
+            System.out.println(" Limite : ");
+            double limite = entrada.nextDouble();
+            conta1 = new Conta(limite, cadastraCliente());
+            System.out.println("Conta numero " + conta1.getN_conta() + " criada com socesso ");
+        }
     }
 
     private Cliente cadastraCliente()
     {
+        entrada.nextLine();
         System.out.println(" Nome do Cliente : ");
         String nomeMenu = entrada.nextLine();
         System.out.println(" Cpf do cliente : ");
         String cpfMenu = entrada.nextLine();
-        Cliente cliente1 = new Cliente(nomeMenu, cpfMenu);
-        return cliente1;
-    }
-
-    /*
-     * Método cria conta com saldo informado
-     */
-    private void criaContaZero()
-    {
-        System.out.println(" Nome do Cliente : ");
-        String nomeMenu = entrada.nextLine();
-        System.out.println(" Cpf do cliente : ");
-        String cpfMenu = entrada.nextLine();
-        System.out.println(" Limite : ");
-        double limite = entrada.nextDouble();
-        Cliente cliente1 = new Cliente(nomeMenu, cpfMenu);
-        conta = new Conta(limite, cliente1);
+        
+        return Cliente.novoCliente(nomeMenu, cpfMenu);
     }
 
     /*
@@ -111,28 +132,69 @@ public class Banco {
      */
      private void exibeCliente()
      {
-        System.out.println(conta.getClienteSaldo());
+        System.out.println("insira o numero da conta : ");
+        int opcaoDoUsuario = Integer.parseInt(entrada.nextLine());
+        if(opcaoDoUsuario == conta.getN_conta())
+        {
+            System.out.println(conta.getClienteSaldo());
+        }
+        else if(opcaoDoUsuario == conta1.getN_conta())
+        {
+            System.out.println(conta1.getClienteSaldo());
+        }
      }
+
+     /*
+      * Realiza um depósito para as duas contas
+      */
+    private void depositar2()
+    {
+        System.out.println("insira o numero da conta : ");
+        int opcaoDoUsuario = Integer.parseInt(entrada.nextLine());
+        System.out.println("Insira o valor a ser depositado : ");
+        double quanto = entrada.nextDouble();
+        if(opcaoDoUsuario == conta.getN_conta())
+        {
+            depositar(conta, quanto); 
+        }
+
+        else if(opcaoDoUsuario == conta1.getN_conta())
+        {
+            depositar(conta1, quanto);
+        }
+        System.out.println("Depósito realizado! ");
+    }
 
      /*
       * Realiza um depósito
       */
-    private void depositar()
+    private void depositar(Conta contax, double quanto)
     {
-        System.out.println("Insira o valor a ser depositado : ");
-        double quanto = entrada.nextDouble();
-        conta.deposito(quanto);
-        System.out.println("Depósito realizado! ");
+        contax.deposito(quanto);
     }
     
     /*
-     * Realiza um saque
+     * Realiza um saque em uma da duas contas
      */
-    private void sacar()
+    private void sacar2()
     {
+        System.out.println("insira o numero da conta : ");
+        int opcaoDoUsuario = Integer.parseInt(entrada.nextLine());
         System.out.println("Digite o valor a ser sacado : ");
         double quanto = entrada.nextDouble();
-        if(conta.saque(quanto))
+        boolean saqueRealizado = true;
+        if(opcaoDoUsuario == conta.getN_conta())
+        {
+           
+            saqueRealizado = sacar(conta, quanto);
+        }
+
+        else if(opcaoDoUsuario == conta1.getN_conta())
+        {
+            saqueRealizado = sacar(conta1, quanto);
+        }
+
+        if(saqueRealizado)
         {
             System.out.println("Saque realizado! ");
         }
@@ -140,6 +202,63 @@ public class Banco {
         {
             System.out.println("Saldo ou limite insuficiente! ");
         }
+    }
+
+
+    /*
+     * Realiza um saque
+     */
+    private boolean sacar(Conta contax, double quanto)
+    {
+        return contax.saque(quanto);
+    }
+
+
+    /*
+     * transferência entre contas
+     */
+    private boolean transferencia(double valor, Conta contaOrigem, Conta contaDestino)
+    {
+        boolean positivo = contaOrigem.saque(valor);
+        if(positivo)
+        {
+            contaDestino.deposito(valor);
+        }
+
+        return positivo;
+    }
+
+
+    /*
+     * transferência entre contas duas contas
+     */
+    private void transferencia2()
+    {
+        boolean positivo = true;
+        System.out.println("insira o numero da conta Origem : ");
+        int origem = Integer.parseInt(entrada.nextLine());
+        System.out.println("Digite o valor a ser transferido : ");
+        double quanto = entrada.nextDouble();
+
+        if(origem == conta.getN_conta())
+        {
+            positivo = transferencia(quanto, conta, conta1);
+        }
+        else if(origem == conta1.getN_conta())
+        {
+            positivo = transferencia(quanto, conta1, conta);
+        }
+
+        if(positivo)
+        {
+            System.out.println("transferência realizada com sucesso! : ");
+        }
+        else
+        {
+            System.out.println("transferência não realizada ");
+            System.out.print("Saldo ou limite insuficiente! ");
+        }
+        
     }
 
      /*
@@ -160,7 +279,8 @@ public class Banco {
         System.out.println("2) consultar saldo ");
         System.out.println("3) Depositar ");
         System.out.println("4) Realizar saque ");
-        System.out.println("5) Sair");
+        System.out.println("5) Realizar transferência ");
+        System.out.println("6) Sair");
         System.out.println("Digite opçao desejada : ");
         int opcaoDoUsuario = Integer.parseInt(entrada.nextLine());
         return opcaoDoUsuario;
