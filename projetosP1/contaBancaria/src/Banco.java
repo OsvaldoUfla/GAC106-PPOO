@@ -1,4 +1,4 @@
-import java.util.Scanner;
+import java.util.ArrayList;
 /*
  * Classe Banco, classe para interagir com a classe Conta.
  * 
@@ -7,210 +7,164 @@ import java.util.Scanner;
  */
 
 public class Banco {
-    private Conta conta;
-    private Conta conta1;
+    ArrayList<Conta> contas;
+    private Interface interfaceDoUsuario =  new Interface();
+    private int opcao;
 
-    Scanner entrada = new Scanner(System.in);
-    private int opcao = 0;     
     public void loop()
     {
         while(opcao != 6)
         {
-            opcao = exibirMenu(entrada);
+            opcao = interfaceDoUsuario.exibirMenu();
             if(opcao == 1)
             {
                 criaConta();          
             }
             else if(opcao == 2)
             {
-                exibeCliente();            }
+                if(exibeCliente(interfaceDoUsuario.nroConta()).equals("-1"))
+                {
+                    interfaceDoUsuario.invalida();
+                }
+                else
+                {
+                    interfaceDoUsuario.exibeInformacao(exibeCliente(interfaceDoUsuario.nroConta())); 
+                }
+            }
             
             else if(opcao == 3)
             {
-                depositar2();
+                depositar(interfaceDoUsuario.nroConta(), interfaceDoUsuario.qualValor());
             }
             
             else if(opcao == 4)
             {
-                sacar2();
+                sacar(interfaceDoUsuario.nroConta(),interfaceDoUsuario.qualValor());
             }
 
             else if(opcao == 5)
             {
-                transferencia2();
+                interfaceDoUsuario.exibeTransferencia();
+                transferencia2(interfaceDoUsuario.qualValor(),interfaceDoUsuario.nroConta(),interfaceDoUsuario.nroConta());
             }
             
             else if(opcao == 6)
             {
-                despedida();
+                interfaceDoUsuario.despedida();
             }
             
             else
             {
-                System.out.println("Opçao invalida! ");
+                interfaceDoUsuario.invalida();
             }
             
             if(opcao !=6 )
             {
-                aguardarEnter(entrada);
+                interfaceDoUsuario.aguardarEnter();
             }
         }
     }
     
+    /*
+     * construtor
+     */
     Banco()
     {
-        conta = null;
+        contas = new ArrayList<Conta>();
+        opcao = 0;
     }
 
-    
+    /*
+     * Cria uma conta nova e inseri no ArrayList
+     */
     private void criaConta()
     {
-        System.out.println("Deseja criar a conta saldo inicial? (s para SIM OU n para NÃO) ");
-        String simNao = entrada.nextLine();
-        if(simNao.equals("s") || simNao.equals("S"))
-        {
-            /*
-             * Método cria conta com saldo informado
-            */
-            System.out.println(" Saldo : ");
-            double saldo = entrada.nextDouble();
-            System.out.println(" Limite : ");
-            double limite = entrada.nextDouble();
-            conta = new Conta(saldo, limite, cadastraCliente());
-            System.out.println("Conta numero " + conta.getN_conta() + " criada com socesso ");
-        }
-        else
-        {   
-            /*
-             * Método cria conta com saldo incial zero
-            */
-            System.out.println(" Limite : ");
-            double limite = entrada.nextDouble();
-            conta = new Conta(limite, cadastraCliente());
-            System.out.println("Conta numero " + conta.getN_conta() + " criada com socesso ");
-        }
-        
-        System.out.println("Deseja criar a conta saldo inicial? (s para SIM OU n para NÃO) ");
-        simNao = entrada.nextLine();
-        if(simNao.equals("s") || simNao.equals("S"))
-        {
-            /*
-             * Método cria conta com saldo informado
-            */
-            System.out.println(" Saldo : ");
-            double saldo = entrada.nextDouble();
-            System.out.println(" Limite : ");
-            double limite = entrada.nextDouble();
-            conta1 = new Conta(saldo, limite, cadastraCliente());
-            System.out.println("Conta numero " + conta1.getN_conta() + " criada com socesso ");
-        }
-        else
-        {   
-            /*
-             * Método cria conta com saldo incial zero
-            */
-            System.out.println(" Limite : ");
-            double limite = entrada.nextDouble();
-            conta1 = new Conta(limite, cadastraCliente());
-            System.out.println("Conta numero " + conta1.getN_conta() + " criada com socesso ");
-        }
-    }
+        String[] nCpf = interfaceDoUsuario.nomeCPF();
+        Cliente cliente = new Cliente(nCpf[0], nCpf[1]);
 
-    private Cliente cadastraCliente()
-    {
-        entrada.nextLine();
-        System.out.println(" Nome do Cliente : ");
-        String nomeMenu = entrada.nextLine();
-        System.out.println(" Cpf do cliente : ");
-        String cpfMenu = entrada.nextLine();
-        
-        return Cliente.novoCliente(nomeMenu, cpfMenu);
+        Double[] sLimite = interfaceDoUsuario.saldoLimite();
+
+        if(sLimite[0] > 0.0)
+        {
+            contas.add(new Conta(sLimite[0], sLimite[1], cliente));
+            interfaceDoUsuario.exibeNroConta(contas.get(contas.size()-1).getN_conta());
+        }
+        else
+        {
+            contas.add(new Conta(sLimite[1], cliente));
+            interfaceDoUsuario.exibeNroConta(contas.get(contas.size()-1).getN_conta());
+        }
     }
 
     /*
      * Exibe nome cpf e saldo do cliente
      */
-     private void exibeCliente()
+     private String exibeCliente(int n)
      {
-        System.out.println("insira o numero da conta : ");
-        int opcaoDoUsuario = Integer.parseInt(entrada.nextLine());
-        if(opcaoDoUsuario == conta.getN_conta())
-        {
-            System.out.println(conta.getClienteSaldo());
-        }
-        else if(opcaoDoUsuario == conta1.getN_conta())
-        {
-            System.out.println(conta1.getClienteSaldo());
-        }
+        Conta conta = buscaPeloNumero(n);
+            if(conta != null)
+            {
+                return conta.getClienteSaldo();
+            }
+
+        return "-1";        
      }
 
      /*
-      * Realiza um depósito para as duas contas
+      * Realiza um busca usando o numero da conta como chave e
+      *retorna o objeto  
       */
-    private void depositar2()
+    private Conta buscaPeloNumero(int n)
     {
-        System.out.println("insira o numero da conta : ");
-        int opcaoDoUsuario = Integer.parseInt(entrada.nextLine());
-        System.out.println("Insira o valor a ser depositado : ");
-        double quanto = entrada.nextDouble();
-        if(opcaoDoUsuario == conta.getN_conta())
+        for(Conta conta : contas)
         {
-            depositar(conta, quanto); 
-        }
+            if(conta.getN_conta() == n)
+            {
+                return conta;
+            }
 
-        else if(opcaoDoUsuario == conta1.getN_conta())
-        {
-            depositar(conta1, quanto);
         }
-        System.out.println("Depósito realizado! ");
+        return null;
     }
 
      /*
       * Realiza um depósito
       */
-    private void depositar(Conta contax, double quanto)
+    private void depositar(int numeroDaConta, double quanto)
     {
-        contax.deposito(quanto);
-    }
-    
-    /*
-     * Realiza um saque em uma da duas contas
-     */
-    private void sacar2()
-    {
-        System.out.println("insira o numero da conta : ");
-        int opcaoDoUsuario = Integer.parseInt(entrada.nextLine());
-        System.out.println("Digite o valor a ser sacado : ");
-        double quanto = entrada.nextDouble();
-        boolean saqueRealizado = true;
-        if(opcaoDoUsuario == conta.getN_conta())
+        Conta conta = buscaPeloNumero(numeroDaConta);
+        if(conta != null)
         {
-           
-            saqueRealizado = sacar(conta, quanto);
-        }
-
-        else if(opcaoDoUsuario == conta1.getN_conta())
-        {
-            saqueRealizado = sacar(conta1, quanto);
-        }
-
-        if(saqueRealizado)
-        {
-            System.out.println("Saque realizado! ");
+            conta.deposito(quanto);
         }
         else
         {
-            System.out.println("Saldo ou limite insuficiente! ");
+            interfaceDoUsuario.invalida();
         }
     }
-
-
+    
+   
     /*
      * Realiza um saque
      */
-    private boolean sacar(Conta contax, double quanto)
+    private void sacar(int numeroDaConta, double quanto)
     {
-        return contax.saque(quanto);
+        Conta conta = buscaPeloNumero(numeroDaConta);
+        if(conta != null)
+        {
+            if(conta.saque(quanto))
+            {
+                interfaceDoUsuario.ok();
+            }
+            else
+            {
+                interfaceDoUsuario.semSaldo();
+            }
+        }
+        else
+        {
+            interfaceDoUsuario.invalida();
+        }
     }
 
 
@@ -232,68 +186,27 @@ public class Banco {
     /*
      * transferência entre contas duas contas
      */
-    private void transferencia2()
+    private void transferencia2(double valor, int origem, int destino)
     {
-        boolean positivo = true;
-        System.out.println("insira o numero da conta Origem : ");
-        int origem = Integer.parseInt(entrada.nextLine());
-        System.out.println("Digite o valor a ser transferido : ");
-        double quanto = entrada.nextDouble();
-
-        if(origem == conta.getN_conta())
+        Conta contaO = buscaPeloNumero(origem);
+        Conta contaD = buscaPeloNumero(destino);
+        if((contaO != null) || (contaD != null))
         {
-            positivo = transferencia(quanto, conta, conta1);
-        }
-        else if(origem == conta1.getN_conta())
-        {
-            positivo = transferencia(quanto, conta1, conta);
-        }
-
-        if(positivo)
-        {
-            System.out.println("transferência realizada com sucesso! : ");
+            if(transferencia(valor,  contaO, contaD))
+            {
+                interfaceDoUsuario.ok();
+            }
+            else
+            {
+                interfaceDoUsuario.semSaldo();
+            }
         }
         else
         {
-            System.out.println("transferência não realizada ");
-            System.out.print("Saldo ou limite insuficiente! ");
+            interfaceDoUsuario.invalida();
         }
-        
     }
 
-     /*
-      * Exibe despedida
-      */
-    private static void despedida()
-    {
-        System.out.println("Ate mais! ");
-    }
 
-    /**
-     * Exibe o menu 
-     */
-    private static int exibirMenu(Scanner entrada)
-    {
-        System.out.println("");
-        System.out.println("1) Criar conta ");
-        System.out.println("2) consultar saldo ");
-        System.out.println("3) Depositar ");
-        System.out.println("4) Realizar saque ");
-        System.out.println("5) Realizar transferência ");
-        System.out.println("6) Sair");
-        System.out.println("Digite opçao desejada : ");
-        int opcaoDoUsuario = Integer.parseInt(entrada.nextLine());
-        return opcaoDoUsuario;
-    }
-        
-    /**
-     * Aguarda o usuario digitar o enter pra exibir o menu de novo.
-     */
-    private static void aguardarEnter(Scanner entrada)
-    {
-        System.out.println("Digite ENTER para continuar ");
-        System.out.println("");
-        entrada.nextLine();
-    }
 }
 

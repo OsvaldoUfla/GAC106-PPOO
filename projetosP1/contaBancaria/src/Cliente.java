@@ -3,6 +3,10 @@ public class Cliente
     private String nome;
     private String cpf;
     
+
+    /*
+     * Construtor
+     */
     Cliente(String nome, String cpf) 
     {
         this.nome = nome;
@@ -10,20 +14,11 @@ public class Cliente
     }
 
     /*
-     * Novo cliente
-     */
-    public static Cliente novoCliente(String nome, String cpf)
-    {
-        return new Cliente(nome, cpf);
-    }
-
-    /*
      * Método que retorna uma string com o nome do cliente 
      */
     public String getNome()
     {
-        String t ="Cliente : " + nome + " \n";
-        return t;
+        return nome;
     }
 
     /*
@@ -31,7 +26,6 @@ public class Cliente
      */
     public String getCpf()
     {
-        String t ="CPF : " + cpf + " \n";
-        return t;
+        return cpf;
     }
 }

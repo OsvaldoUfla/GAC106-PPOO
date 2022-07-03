@@ -12,12 +12,13 @@ public class Conta {
     private double limite;
     private Cliente cliente1;
     
-    //Construtor passando parametros limite cliente
+    //Construtor passando por parametros o limite e o nome do cliente
     Conta(double limite, Cliente cliente)
     {
         this(0.0,limite, cliente);
     }
-    //Construtor passando parametros saldo limite cliente
+    
+    //Construtor passando por parametros saldo, limite e o nome do cliente
     Conta(double saldo, double limite, Cliente cliente)
     {
         this.saldo = saldo;
@@ -27,20 +28,21 @@ public class Conta {
         nroDecontas++;        
     }
 
-    //Consulta o saldo
+    //Retorna o nome, cpf e o saldo da conta numa String;
     public String getClienteSaldo()
     { 
-        String saldoNaConta = cliente1.getNome() + cliente1.getCpf() + "Saldo : " + saldo + " \n";
-        return saldoNaConta;
+        return "Cliente :" + cliente1.getNome() + "\n" 
+                                            + cliente1.getCpf() + "\n" 
+                                             + "Saldo : " + saldo + " \n";
     }
 
-    //retorna o numero da conta
+    //Consulta o número, retorna o numero da conta
     public int getN_conta()
     { 
         return nroDaconta;
     }
 
-    //Saque
+    //Saque o valor na conta, se tiver saldo ou limite.
     public boolean saque(double valor)
     {
         //Se o valor a ser sacado é menor ou igual ao saldo mais o limite
@@ -57,6 +59,7 @@ public class Conta {
         
         
     }
+    
     //Deposita o valor na conta.
     public void deposito(double valor)
     {
