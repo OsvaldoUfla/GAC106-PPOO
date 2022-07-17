@@ -8,12 +8,12 @@ import java.util.ArrayList;
 
 public class Banco {
     ArrayList<Conta> contas;
-    private Interface interfaceDoUsuario =  new Interface();
+    private Interface interfaceDoUsuario;
     private int opcao;
 
     public void loop()
     {
-        while(opcao != 6)
+        while(opcao != 8)
         {
             opcao = interfaceDoUsuario.exibirMenu();
             if(opcao == 1)
@@ -22,13 +22,14 @@ public class Banco {
             }
             else if(opcao == 2)
             {
-                if(exibeCliente(interfaceDoUsuario.nroConta()).equals("-1"))
+                String opcao6 = exibeCliente(interfaceDoUsuario.nroConta());
+                if(opcao6.equals("-1"))
                 {
                     interfaceDoUsuario.invalida();
                 }
                 else
                 {
-                    interfaceDoUsuario.exibeInformacao(exibeCliente(interfaceDoUsuario.nroConta())); 
+                    interfaceDoUsuario.exibeInformacao(opcao6); 
                 }
             }
             
@@ -45,10 +46,28 @@ public class Banco {
             else if(opcao == 5)
             {
                 interfaceDoUsuario.exibeTransferencia();
-                transferencia2(interfaceDoUsuario.qualValor(),interfaceDoUsuario.nroConta(),interfaceDoUsuario.nroConta());
+                double n1 = interfaceDoUsuario.qualValor();
+                int n2 = interfaceDoUsuario.nroConta();
+                int n3 = interfaceDoUsuario.nroConta();
+                transferencia2(n1, n2, n3);
             }
             
             else if(opcao == 6)
+            {
+                exibeListaContas();
+            }
+
+            else if(opcao == 7)
+            {
+                int m = buscaPeloNumero(interfaceDoUsuario.nroConta());
+                if(m != -1)
+                {
+                    interfaceDoUsuario.exibeInformacao(remover(m));
+                }
+                //remover conta
+            }
+
+            else if(opcao == 8)
             {
                 interfaceDoUsuario.despedida();
             }
@@ -58,7 +77,7 @@ public class Banco {
                 interfaceDoUsuario.invalida();
             }
             
-            if(opcao !=6 )
+            if(opcao !=8)
             {
                 interfaceDoUsuario.aguardarEnter();
             }
@@ -72,6 +91,7 @@ public class Banco {
     {
         contas = new ArrayList<Conta>();
         opcao = 0;
+        interfaceDoUsuario =  new Interface();
     }
 
     /*
@@ -101,10 +121,10 @@ public class Banco {
      */
      private String exibeCliente(int n)
      {
-        Conta conta = buscaPeloNumero(n);
-            if(conta != null)
+        int indice = buscaPeloNumero(n);
+            if(n != -1)
             {
-                return conta.getClienteSaldo();
+                return "\nNome : " + contas.get(indice).getNome()+ "\nCpf : " + contas.get(indice).getCPf() + "\nSaldo : " + contas.get(indice).getSaldo();
             }
 
         return "-1";        
@@ -114,17 +134,17 @@ public class Banco {
       * Realiza um busca usando o numero da conta como chave e
       *retorna o objeto  
       */
-    private Conta buscaPeloNumero(int n)
+    private int buscaPeloNumero(int n)
     {
-        for(Conta conta : contas)
+        for(int i = 0; i < contas.size(); i++ )
         {
-            if(conta.getN_conta() == n)
+            if(contas.get(i).getN_conta() == n)
             {
-                return conta;
+                return i;
             }
 
         }
-        return null;
+        return -1;
     }
 
      /*
@@ -132,10 +152,10 @@ public class Banco {
       */
     private void depositar(int numeroDaConta, double quanto)
     {
-        Conta conta = buscaPeloNumero(numeroDaConta);
-        if(conta != null)
+        int indice = buscaPeloNumero(numeroDaConta);
+        if(indice != -1)
         {
-            conta.deposito(quanto);
+            contas.get(indice).deposito(quanto);
         }
         else
         {
@@ -143,16 +163,37 @@ public class Banco {
         }
     }
     
+
+    /*
+     * Remove uma conta do ArrayList
+     */
+    private String remover(int n)
+    {
+        if(contas.get(n).getSaldo() == 0)
+        {
+            contas.remove(n);
+            return "Conta removida";
+        }
+        else if (contas.get(n).getSaldo() < 0 )
+        {
+            return "Conta com debito";
+        }
+        else if (contas.get(n).getSaldo() > 0 )
+        {
+            return "Conta com saldo";
+        }
+        return "Erro";
+    }
    
     /*
      * Realiza um saque
      */
     private void sacar(int numeroDaConta, double quanto)
     {
-        Conta conta = buscaPeloNumero(numeroDaConta);
-        if(conta != null)
+        int indice = buscaPeloNumero(numeroDaConta);
+        if(indice != -1)
         {
-            if(conta.saque(quanto))
+            if(contas.get(indice).saque(quanto))
             {
                 interfaceDoUsuario.ok();
             }
@@ -171,12 +212,12 @@ public class Banco {
     /*
      * transferência entre contas
      */
-    private boolean transferencia(double valor, Conta contaOrigem, Conta contaDestino)
+    private boolean transferencia(double valor, int contaOrigem, int contaDestino)
     {
-        boolean positivo = contaOrigem.saque(valor);
+        boolean positivo = contas.get(contaOrigem).saque(valor);
         if(positivo)
         {
-            contaDestino.deposito(valor);
+            contas.get(contaDestino).deposito(valor);
         }
 
         return positivo;
@@ -188,9 +229,9 @@ public class Banco {
      */
     private void transferencia2(double valor, int origem, int destino)
     {
-        Conta contaO = buscaPeloNumero(origem);
-        Conta contaD = buscaPeloNumero(destino);
-        if((contaO != null) || (contaD != null))
+        int contaO = buscaPeloNumero(origem);
+        int contaD = buscaPeloNumero(destino);
+        if((contaO != -1) || (contaD != -1))
         {
             if(transferencia(valor,  contaO, contaD))
             {
@@ -207,6 +248,19 @@ public class Banco {
         }
     }
 
+    /*
+     * Exibe uma lista de contas já criadas 
+     */
+    private void exibeListaContas()
+    {
+        String texto ="\nNome -> Numero da conta\n";
+        for(Conta conta : contas)
+        {
+             texto += conta.getNome() + "    " + conta.getN_conta() + "\n";
+            
+        }
+        interfaceDoUsuario.exibeInformacao(texto);
+    }
 
 }
 

@@ -28,13 +28,27 @@ public class Conta {
         nroDecontas++;        
     }
 
-    //Retorna o nome, cpf e o saldo da conta numa String;
-    public String getClienteSaldo()
+    //Retorna o nome numa String;
+    public String getNome()
     { 
-        return "Cliente :" + cliente1.getNome() + "\n" 
-                                            + cliente1.getCpf() + "\n" 
-                                             + "Saldo : " + saldo + " \n";
+        return  cliente1.getNome(); 
     }
+
+
+    //Retorna o cpf numa String;
+    public String getCPf()
+    { 
+        return  cliente1.getCpf(); 
+    }
+
+
+
+    //Retorna  saldo da conta numa String;
+    public double getSaldo()
+    { 
+        return saldo;
+    }
+
 
     //Consulta o número, retorna o numero da conta
     public int getN_conta()

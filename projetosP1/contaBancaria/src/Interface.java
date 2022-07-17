@@ -20,7 +20,9 @@ public class Interface {
         System.out.println("3) Depositar ");
         System.out.println("4) Realizar saque ");
         System.out.println("5) Realizar transferência ");
-        System.out.println("6) Sair");
+        System.out.println("6) Listar  contas já criadas");
+        System.out.println("7) Remover conta ");
+        System.out.println("8) Sair");
         System.out.println("Digite opçao desejada : ");
         int opcaoDoUsuario = Integer.parseInt(entrada.nextLine());
         return opcaoDoUsuario;
@@ -75,9 +77,9 @@ public class Interface {
     public String[] nomeCPF()
     {
         String[] nomeCpf = new String[2];
-        System.out.println(" Nome do Cliente : ");
+        System.out.print("\nNome do Cliente : ");
         nomeCpf[0] = entrada.nextLine();
-        System.out.println(" Cpf do cliente : ");
+        System.out.print("\nCpf do cliente : ");
         nomeCpf[1] = entrada.nextLine();
         
         return nomeCpf;
@@ -92,17 +94,9 @@ public class Interface {
     public Double[] saldoLimite()
     {
         Double[] saldoLimite = new Double[2];
-        System.out.println("Digite o Saldo : (Conta sem saldo digite não)");
-        boolean n = (entrada.hasNextDouble());
-        if( n )
-        {
-            saldoLimite[0] = entrada.nextDouble();
-        }
-        else
-        {
-            saldoLimite[0] = -1.0;
-        }
-        System.out.println(" Limite : ");
+        System.out.print("\n(Conta sem saldo insira 0)\nDigite o Saldo : ");
+        saldoLimite[0] = entrada.nextDouble();
+        System.out.print("\nLimite : ");
         saldoLimite[1] = entrada.nextDouble();
 
         return saldoLimite;
@@ -113,7 +107,7 @@ public class Interface {
      */
     public void exibeNroConta(int n)
     {
-        System.out.println("Conta numero " + n + " criada com socesso ");
+        System.out.println("Conta numero " + n + " criada com sucesso! ");
     }
      
     /*
@@ -129,8 +123,10 @@ public class Interface {
      */
     public int nroConta()
     {
-        System.out.println("\nInsira o numero da conta : ");
-        return  Integer.parseInt(entrada.nextLine());
+        System.out.print("\nInsira o numero da conta : ");
+        int n = Integer.parseInt(entrada.nextLine());
+        aguardarEnter();
+        return  n;
     }
 
     /*
@@ -138,13 +134,15 @@ public class Interface {
      */
     public Double qualValor()
     {
-        System.out.println("\niQual o valor : ");
-        return  entrada.nextDouble();
+        System.out.print("\nQual o valor : ");
+        Double valor = entrada.nextDouble();
+        aguardarEnter();
+        return  valor;
     }
 
     public void exibeTransferencia()
     {
-        System.out.println("\nValor a ser transferido \nConta de origem \nConta de destino \n");
+        System.out.print("\n(1)Valor a ser transferido \n(2)Conta de origem \n(3)Conta de destino \n");
     }
 }
 
