@@ -1,7 +1,7 @@
 # GAC106-PPOO
 Pratica programação orientado objeto
 
-## [GitHub Classroom](https://github.com/ppg-dac-ufla)\
+## [GitHub Classroom](https://github.com/ppg-dac-ufla)
 [testando-github-classroom](https://github.com/ppg-dac-ufla/testando-github-classroom-OsvaldoUfla)\
 [Exercicio-zoologico](https://github.com/ppg-dac-ufla/exercicio-zoologico-OsvaldoUfla)\
 [Exercicio-zoologico-polimorfismo](https://github.com/ppg-dac-ufla/exercicio-zoologico-polimorfismo-OsvaldoUfla)\
