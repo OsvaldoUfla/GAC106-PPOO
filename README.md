@@ -1,5 +1,5 @@
 # GAC106-PPOO
-Pratica programação orientado objeto
+Práticas de Programação Orientada a Objetos
 
 ## [GitHub Classroom](https://github.com/ppg-dac-ufla)
 [testando-github-classroom](https://github.com/ppg-dac-ufla/testando-github-classroom-OsvaldoUfla)\
@@ -8,6 +8,7 @@ Pratica programação orientado objeto
 [Exercicio-rede-social-grafica](https://github.com/ppg-dac-ufla/exercicio-rede-social-grafica-OsvaldoUfla)
 
 ## Projetos da disciplina
+[programa em Java que encontra as raízes de uma equação do segundo grau ax2 + bx + c](https://github.com/OsvaldoUfla/equacao-do-segundo-grau)\
 [Exibe quantos anos vai fazer](https://github.com/OsvaldoUfla/GAC106-PPOO-Exibe-quantos-anos-vai-fazer)\
 [Projeto Veículos: Um exemplo da aula de Herança](https://github.com/OsvaldoUfla/GAC106-PPOO-Veiculos)\
 [Projeto Veículos com Polimorfismo](https://github.com/OsvaldoUfla/GAC106-PPOO-Veiculos-com-Polimorfismo)\
