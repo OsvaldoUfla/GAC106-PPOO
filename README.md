@@ -9,6 +9,7 @@ Práticas de Programação Orientada a Objetos
 
 ## Projetos da disciplina
 [programa em Java que encontra as raízes de uma equação do segundo grau ax2 + bx + c](https://github.com/OsvaldoUfla/equacao-do-segundo-grau)\
+[Jogo Nave](https://github.com/OsvaldoUfla/Nave2)\
 [Exibe quantos anos vai fazer](https://github.com/OsvaldoUfla/GAC106-PPOO-Exibe-quantos-anos-vai-fazer)\
 [Projeto Veículos: Um exemplo da aula de Herança](https://github.com/OsvaldoUfla/GAC106-PPOO-Veiculos)\
 [Projeto Veículos com Polimorfismo](https://github.com/OsvaldoUfla/GAC106-PPOO-Veiculos-com-Polimorfismo)\
